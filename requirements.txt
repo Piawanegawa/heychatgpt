@@ -1,1 +1,9 @@
+pywin32
+pydantic
+pyyaml
+pywin32-ctypes
+pywinauto
+pyaudio
+SpeechRecognition
+pvporcupine; extra == "porcupine"
 pytest>=6.0

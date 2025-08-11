@@ -34,7 +34,10 @@ def _load_yaml(path: str) -> Dict[str, Any]:
             if value.isdigit():
                 data[key] = int(value)
             else:
-                data[key] = value
+                try:
+                    data[key] = float(value)
+                except ValueError:
+                    data[key] = value
     return data
 
 
@@ -43,6 +46,7 @@ class Settings:
     wake_word: str = "Computer"
     stt_backend: str = "porcupine"
     device_index: int = 0
+    porcupine_sensitivity: float = 0.7
     chatgpt_window_title_regex: str = "^ChatGPT$"
     audio_button_locator: str = ""
     log_level: str = "INFO"
@@ -53,6 +57,8 @@ def _validate(settings: Settings) -> Settings:
         raise ValueError(f"stt_backend must be one of {ALLOWED_STT}")
     if not settings.audio_button_locator:
         raise ValueError("audio_button_locator is required")
+    if not 0.0 <= settings.porcupine_sensitivity <= 1.0:
+        raise ValueError("porcupine_sensitivity must be between 0 and 1")
     return settings
 
 
@@ -67,6 +73,8 @@ def get_settings(config_file: str | None = None) -> Settings:
         if env_val is not None:
             if field == "device_index":
                 data[field] = int(env_val)
+            elif field == "porcupine_sensitivity":
+                data[field] = float(env_val)
             else:
                 data[field] = env_val
 
