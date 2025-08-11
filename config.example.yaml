@@ -1,0 +1,7 @@
+# Example configuration for heychatgpt
+wake_word: "Computer"
+stt_backend: "porcupine"
+device_index: 0
+chatgpt_window_title_regex: "^ChatGPT$"
+audio_button_locator: "name:AudioButton"
+log_level: "INFO"
